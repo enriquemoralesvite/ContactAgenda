@@ -5,9 +5,11 @@ import ContactForm from "../components/ContactForm.astro";
 ---
 
 <Layout>
-  <Welcome />
-  <ContactForm />
-  <div id="contactList" class="max-w-md mx-auto mt-6"></div>
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-auto">
+    <h1 class="text-2xl font-bold mb-4 text-center">Agenda de Contactos</h1>
+    <ContactForm />
+    <div id="contactList" class="mt-4"></div>
+  </div>
 </Layout>
 
 <script type="module" src="/src/scripts/index.js"></script>
