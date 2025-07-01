@@ -48,10 +48,9 @@ body {
   width: 90%;
   height: 96%;
   border-radius: 25px;
-  background-color: rgb(255, 255, 255);
+  background-color: white;
   overflow: hidden;
 }
-
 .screen-content {
   width: 97%;
   height: 89%;
