@@ -22,7 +22,7 @@ const contactId = Astro.params.id || "1"; // Default to "1" if no
         <Icon name="back" class="text-gray-700 font-bold" />
       </a>
       <a
-        href="/form"
+        href={`/contacts/form?id=${contactId}`}
         class="rounded-full bg-gray-300 px-2 py-1 text-sm text-gray-700"
         >Editar</a
       >

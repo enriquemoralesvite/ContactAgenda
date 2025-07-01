@@ -1,6 +1,59 @@
 import { showToast } from "./utilities/toast.js";
 import { getContacts, saveContacts } from "./utilities/storage.js";
 
+// Detectar si estamos editando o agregando
+const params = new URLSearchParams(window.location.search);
+const contactId = params.get("id");
+
+// Referencias a elementos
+const form = document.getElementById("formContact");
+const btnSave = document.getElementById("btnSave");
+
+// Si hay id en URL → editar contacto
+if (contactId) {
+  const contacts = getContacts();
+  const contact = contacts.find((c) => c.id == contactId);
+
+  if (contact) {
+    // Al cancelar, regresar a la información del contacto.
+    document.getElementById("btnCancel").href = `/contacts/${contactId}`;
+    // Rellenar formulario
+    document.getElementById("contactName").value = contact.name;
+    document.getElementById("contactLastName").value = contact.lastname;
+    document.getElementById("contactPhone").value = contact.phone;
+    document.getElementById("contactEmail").value = contact.email;
+
+    // Cambiar título si quieres
+    const title = document.querySelector(".font-semibold");
+    if (title) title.textContent = "Editar Contacto";
+
+    // Cambiar texto de botón si quieres
+    btnSave.textContent = "Actualizar";
+
+    // Activar botón porque ya hay datos cargados
+    btnSave.disabled = false;
+
+    // Evento guardar para actualizar
+    btnSave.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      contact.name = document.getElementById("contactName").value;
+      contact.lastname = document.getElementById("contactLastName").value;
+      contact.phone = document.getElementById("contactPhone").value;
+      contact.email = document.getElementById("contactEmail").value;
+
+      saveContacts(contacts);
+      showToast("Contacto actualizado correctamente", "success");
+      window.location.href = "/contacts";
+    });
+  } else {
+    showToast("Contacto no encontrado", "error");
+    btnSave.disabled = true;
+  }
+} else {
+  document.getElementById("btnSave").addEventListener("click", addContact);
+}
+
 // Event listener para activar BTN GUARDAR
 document.getElementById("formContact").addEventListener("input", (e) => {
   const name = document.getElementById("contactName").value;
@@ -12,8 +65,6 @@ document.getElementById("formContact").addEventListener("input", (e) => {
     document.getElementById("btnSave").disabled = true;
   }
 });
-
-document.getElementById("btnSave").addEventListener("click", addContact);
 
 //Funcion agregar contacto
 function addContact(e) {
