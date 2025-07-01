@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <div
+    class="bg-white p-4 w-full max-w-md mx-auto h-full overflow-hidden overflow-y-auto"
+  >
+    <div class="flex justify-between">
+      <h1 class="text-2xl font-bold mb-4">Contactos</h1>
+      <a href="/contactForm" class="text-2xl font-bold">+</a>
+    </div>
+
+    <input
+      type="text"
+      placeholder="Buscar"
+      class="bg-gray-200 p-2 w-full rounded-full"
+    />
+    <div id="contactList" class="mt-4"></div>
+  </div>
+</Layout>
+
+<script type="module" src="/src/scripts/index.js"></script>

@@ -150,9 +150,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  document.getElementById("btnAdd").addEventListener("click", addContact);
-  document.getElementById("btnEdit").addEventListener("click", editContact);
-  document.getElementById("btnDelete").addEventListener("click", deleteContact);
+  document.getElementById("btnAdd")?.addEventListener("click", addContact);
+  document.getElementById("btnEdit")?.addEventListener("click", editContact);
+  document
+    .getElementById("btnDelete")
+    ?.addEventListener("click", deleteContact);
 
   updateContactList();
 });
