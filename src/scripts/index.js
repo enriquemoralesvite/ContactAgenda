@@ -1,4 +1,4 @@
-import { getContacts, saveContacts } from "./storage.js";
+import { getContacts, saveContacts } from "./utilities/storage.js";
 
 let editIndex = -1;
 // ----------- Esta funcion se encuentra en TOAST.JS  - se usa con   import { showToast } from "./toast.js";
@@ -22,6 +22,8 @@ function showToast(message, type) {
   }, 3000);
 }
 // -------------------------------------------------------------
+
+// ----------- Esta funcion se encuentra en contactList.JS
 
 function updateContactList() {
   const list = document.getElementById("contactList");
@@ -48,6 +50,7 @@ function selectContact(index) {
   document.getElementById("contactLastName").value = contacts[index].lastname;
   document.getElementById("contactPhone").value = contacts[index].phone;
 }
+//---------------------------------------------------------
 
 // ----------- Esta funcion se encuentra en FORM.JS  - se usa con
 
