@@ -1,5 +1,5 @@
-import { showToast } from "./toast.js";
-import { getContacts, saveContacts } from "./storage.js";
+import { showToast } from "./utilities/toast.js";
+import { getContacts, saveContacts } from "./utilities/storage.js";
 
 // Event listener para activar BTN GUARDAR
 document.getElementById("formContact").addEventListener("input", (e) => {

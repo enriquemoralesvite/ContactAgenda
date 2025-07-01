@@ -66,7 +66,7 @@ const contactId = Astro.params.id || "1"; // Default to "1" if no
   </div>
 </div>
 <script>
-  import { getContacts } from "../../scripts/storage.js";
+  import { getContacts } from "../../scripts/utilities/storage.js";
 
   const contactId =
     document.querySelector("[data-contact-id]")?.dataset?.contactId;
