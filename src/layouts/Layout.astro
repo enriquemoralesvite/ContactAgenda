@@ -1,5 +1,6 @@
 ---
-import "../styles/global.css";
+import "./src/styles/global.css";
+import IPhoneFrame from "../components/IPhoneFrame.astro";
 ---
 
 <!doctype html>
@@ -12,6 +13,8 @@ import "../styles/global.css";
     <title>Contacts Apps</title>
   </head>
   <body>
-    <slot />
+    <IPhoneFrame>
+      <slot />
+    </IPhoneFrame>
   </body>
 </html>

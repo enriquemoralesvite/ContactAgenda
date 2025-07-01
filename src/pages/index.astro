@@ -5,7 +5,9 @@ import ContactForm from "../components/ContactForm.astro";
 ---
 
 <Layout>
-  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-auto">
+  <div
+    class="bg-white p-4 w-full max-w-md mx-auto h-full overflow-hidden overflow-y-auto"
+  >
     <h1 class="text-2xl font-bold mb-4 text-center">Agenda de Contactos</h1>
     <ContactForm />
     <div id="contactList" class="mt-4"></div>
