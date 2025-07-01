@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Form from "../../components/contacts/Form.astro";
+---
+
+<Layout>
+  <div class="bg-white w-full mx-auto h-full overflow-hidden overflow-y-auto">
+    <div class="flex justify-between mb-3 bg-gray-200 p-2">
+      <a href="/contacts" class="text-blue-600">Cancelar</a>
+      <h2 class="font-semibold">Nuevo Contacto</h2>
+      <button
+        id="btnSave"
+        class="disabled:text-gray-400 cursor-pointer"
+        disabled>Guardar</button
+      >
+    </div>
+    <Form />
+  </div>
+</Layout>
