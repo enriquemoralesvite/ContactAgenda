@@ -1,0 +1,14 @@
+---
+import IPhoneSVG from "../assets/iphone.svg";
+
+const { height = "100%" } = Astro.props;
+---
+
+<div class="iphone-frame fade-in" style={{ height }}>
+  <IPhoneSVG class="iphone" style={{ height }} />
+  <div class="screen">
+    <div class="screen-content">
+      <slot />
+    </div>
+  </div>
+</div>
