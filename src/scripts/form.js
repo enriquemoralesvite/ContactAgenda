@@ -57,10 +57,10 @@ if (contactId) {
 
 // Event listener para activar BTN GUARDAR
 document.getElementById("formContact").addEventListener("input", (e) => {
-  const name = document.getElementById("contactName").value;
-  const phone = document.getElementById("contactPhone").value;
+  const form = document.getElementById("formContact");
 
-  if (name && phone) {
+  // Revisar si se cumplen las restricciones del formulario
+  if (form.checkValidity()) {
     document.getElementById("btnSave").disabled = false;
   } else {
     document.getElementById("btnSave").disabled = true;
