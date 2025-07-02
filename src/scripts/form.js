@@ -12,7 +12,7 @@ const btnSave = document.getElementById("btnSave");
 // Si hay id en URL → editar contacto
 if (contactId) {
   const contacts = getContacts();
-  const contact = contacts.find((c) => c.id == contactId);
+  const contact = contacts.find((c) => c.id == contactId && c.active);
 
   if (contact) {
     // Al cancelar, regresar a la información del contacto.
@@ -49,6 +49,7 @@ if (contactId) {
   } else {
     showToast("Contacto no encontrado", "error");
     btnSave.disabled = true;
+    window.location.href = "/contacts";
   }
 } else {
   document.getElementById("btnSave").addEventListener("click", addContact);
@@ -83,6 +84,7 @@ function addContact(e) {
       lastname: lastname.value,
       phone: phone.value,
       email: email.value,
+      active: true,
     };
 
     contacts.push(newContact);
