@@ -40,6 +40,11 @@ function updateContactList(filter = "") {
 
       list.appendChild(div);
     });
+  const contactCountElement = document.getElementById("contactCount");
+  if (contactCountElement) {
+    contactCountElement.textContent = `Total de contactos: ${filteredContacts.filter((c) => c.active).length}`;
+  }
+
 }
 
 // Add input event listener to search field
