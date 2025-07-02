@@ -2,6 +2,15 @@ import { showToast } from "./utilities/toast.js";
 import { getContacts, saveContacts } from "./utilities/storage.js";
 
 
+// Convertir imagen a base64
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject("Error al leer la imagen");
+    reader.readAsDataURL(file);
+  });
+}
 
   // Detectar si estamos editando o agregando
 const params = new URLSearchParams(window.location.search);
@@ -46,7 +55,7 @@ if (contactId) {
 
     // Activar botón porque ya hay datos cargados
     btnSave.disabled = false;
-
+    form.dispatchEvent(new Event("input"));
     // Evento guardar para actualizar
     btnSave.addEventListener("click", async (e) => {
       e.preventDefault();
@@ -82,10 +91,10 @@ if (contactId) {
 
 // Event listener para activar BTN GUARDAR
 document.getElementById("formContact").addEventListener("input", (e) => {
-  const name = document.getElementById("contactName").value;
-  const phone = document.getElementById("contactPhone").value;
+  const form = document.getElementById("formContact");
 
-  if (name && phone) {
+  // Revisar si se cumplen las restricciones del formulario
+  if (form.checkValidity()) {
     document.getElementById("btnSave").disabled = false;
   } else {
     document.getElementById("btnSave").disabled = true;
@@ -146,13 +155,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Convertir imagen a base64
-function toBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject("Error al leer la imagen");
-    reader.readAsDataURL(file);
-  });
-}
 
