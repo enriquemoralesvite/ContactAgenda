@@ -15,6 +15,21 @@ function updateContactList(filter = "") {
       contact.phone?.startsWith(filter)
   );
 
+  //Ordenar nombres de forma alfabetica
+  filteredContacts.sort((a, b) => {
+    const nameA = a.name.toLowerCase().trim();
+    const nameB = b.name.toLowerCase().trim();
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+
+    // Si nombres iguales, comparar apellidos
+    const lastNameA = a.lastname.toLowerCase().trim();
+    const lastNameB = b.lastname.toLowerCase().trim();
+    if (lastNameA < lastNameB) return -1;
+    if (lastNameA > lastNameB) return 1;
+    return 0;
+  });
+
   if (filteredContacts.length === 0) {
     list.innerHTML =
       "<p class='text-center text-gray-500 mt-4'>No se encontraron Contactos.</p>";
