@@ -1,6 +1,7 @@
-import { getContacts, saveContacts } from "./storage.js";
+import { getContacts, saveContacts } from "./utilities/storage.js";
 
 let editIndex = -1;
+// ----------- Esta funcion se encuentra en TOAST.JS  - se usa con   import { showToast } from "./toast.js";
 
 function showToast(message, type) {
   const toast = document.createElement("div");
@@ -20,6 +21,9 @@ function showToast(message, type) {
     setTimeout(() => toast.remove(), 500);
   }, 3000);
 }
+// -------------------------------------------------------------
+
+// ----------- Esta funcion se encuentra en contactList.JS
 
 function updateContactList() {
   const list = document.getElementById("contactList");
@@ -45,11 +49,10 @@ function selectContact(index) {
   document.getElementById("contactName").value = contacts[index].name;
   document.getElementById("contactLastName").value = contacts[index].lastname;
   document.getElementById("contactPhone").value = contacts[index].phone;
-
-  // enableButtons();
-
-  setStateButtons(false);
 }
+//---------------------------------------------------------
+
+// ----------- Esta funcion se encuentra en FORM.JS  - se usa con
 
 function addContact(e) {
   e.preventDefault();
@@ -78,6 +81,7 @@ function addContact(e) {
     showToast("Por favor, completa todos los campos", "error");
   }
 }
+//---------------------------------------
 
 function editContact(e) {
   e.preventDefault();
@@ -100,8 +104,6 @@ function editContact(e) {
     document.getElementById("contactPhone").value = "";
     updateContactList();
     showToast("Contacto editado exitosamente", "warning");
-    // disableButtons();
-    setStateButtons(true);
   } else {
     showToast("Selecciona un contacto y completa todos los campos", "error");
   }
@@ -119,8 +121,6 @@ function deleteContact() {
     document.getElementById("contactPhone").value = "";
     updateContactList();
     showToast("Contacto eliminado exitosamente", "error");
-    // disableButtons();
-    setStateButtons(true);
   } else {
     showToast("Selecciona un contacto para eliminar", "error");
   }
@@ -150,48 +150,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  document.getElementById("btnAdd").addEventListener("click", addContact);
-  document.getElementById("btnEdit").addEventListener("click", editContact);
-  document.getElementById("btnDelete").addEventListener("click", deleteContact);
+  document.getElementById("btnAdd")?.addEventListener("click", addContact);
+  document.getElementById("btnEdit")?.addEventListener("click", editContact);
+  document
+    .getElementById("btnDelete")
+    ?.addEventListener("click", deleteContact);
 
   updateContactList();
 });
-
-function disableButtons() {
-  const btnEdit = document.getElementById("btnEdit");
-  const btnDelete = document.getElementById("btnDelete");
-
-  btnEdit?.setAttribute("disabled", "true");
-  btnDelete?.setAttribute("disabled", "true");
-}
-
-function enableButtons() {
-  const btnEdit = document.getElementById("btnEdit");
-  const btnDelete = document.getElementById("btnDelete");
-  btnEdit?.removeAttribute("disabled");
-  btnDelete?.removeAttribute("disabled");
-}
-
-function setStateButtons(state) {
-  const btnEdit = document.getElementById("btnEdit");
-  const btnDelete = document.getElementById("btnDelete");
-  btnEdit.disabled = state;
-  btnDelete.disabled = state;
-
-  // Si el botón está deshabilitado se cambia el color del background
-  const classDisabledEdit = ["bg-blue-500", "text-white", "hover:bg-blue-600"];
-  const classDisabledDelete = ["bg-red-500", "text-white", "hover:bg-red-600"];
-  const classDefault = ["border-gray-200", "bg-gray-200", "text-gray-500"];
-
-  if (state) {
-    btnEdit.classList.add(...classDefault);
-    btnDelete.classList.add(...classDefault);
-    btnEdit.classList.remove(...classDisabledEdit);
-    btnDelete.classList.remove(...classDisabledDelete);
-  } else {
-    btnEdit.classList.add(...classDisabledEdit);
-    btnDelete.classList.add(...classDisabledDelete);
-    btnEdit.classList.remove(...classDefault);
-    btnDelete.classList.remove(...classDefault);
-  }
-}

@@ -1,0 +1,92 @@
+---
+import { Icon } from "astro-icon/components";
+
+const actions = [
+  { icon: "message", text: "mensaje" },
+  { icon: "phone", text: "llamar" },
+  { icon: "email", text: "correo" },
+];
+
+const contactId = Astro.params.id || "1"; // Default to "1" if no
+---
+
+<div class="flex flex-col w-full" data-contact-id={contactId}>
+  <!-- Div mostrar nombre y acciones -->
+  <div class="bg-gray-200">
+    <!-- Botones Atras y Editar -->
+    <div class="flex justify-between p-2">
+      <a
+        href="/contacts"
+        class="rounded-full bg-gray-300 px-2 py-1 flex flex-col justify-center items-center"
+      >
+        <Icon name="back" class="text-gray-700 font-bold" />
+      </a>
+      <a
+        href="/form"
+        class="rounded-full bg-gray-300 px-2 py-1 text-sm text-gray-700"
+        >Editar</a
+      >
+    </div>
+    <!-- Imagen y nombre -->
+    <div class="flex flex-col justify-center items-center">
+      <div
+        class="flex flex-col justify-center items-center text-5xl font-semibold bg-gray-400 rounded-full w-20 h-20 text-white"
+      >
+        <span id="avatar"></span>
+      </div>
+      <span id="name" class="m-2 text-gray-700 font-semibold"></span>
+    </div>
+    <!-- Acciones -->
+    <div class="grid grid-cols-3 grid-rows-1 gap-4 mx-2 my-2">
+      {
+        actions.map(({ icon, text }) => (
+          <div class="flex flex-col justify-center items-center bg-gray-400 rounded-xl py-2">
+            <Icon name={icon} class="text-white text-3xl" />
+            <p class="text-xs text-white">{text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <!-- Informacion del contacto, celular y correo  -->
+
+  <div class="w-full mt-4">
+    <div
+      class="flex flex-col w-full bg-gray-200 p-2 border border-gray-200 border-b-gray-300"
+    >
+      <p class="text-xs text-gray-600">Celular</p>
+      <p id="phone" class="text-gray-700"></p>
+    </div>
+    <div
+      class="flex flex-col w-full bg-gray-200 p-2 border border-gray-200 border-b-gray-300"
+    >
+      <p class="text-xs text-gray-600">Correo</p>
+      <p id="email" class="text-gray-700"></p>
+    </div>
+  </div>
+</div>
+<script>
+  import { getContacts } from "../../scripts/utilities/storage.js";
+
+  const contactId =
+    document.querySelector("[data-contact-id]")?.dataset?.contactId;
+  const contacts = getContacts();
+
+  console.log(contactId, contacts);
+
+  let contact = null;
+  if (contacts?.length) {
+    contact = contacts.find((contact) => contact.id == contactId);
+    console.log(contact);
+
+    document.getElementById("name").textContent = [
+      contact.name,
+      contact.lastname,
+    ].join(" ");
+    document.getElementById("phone").textContent = contact.phone;
+    document.getElementById("email").textContent = contact.email;
+    document.getElementById("avatar").textContent = contact.name
+      .split("")[0]
+      .toUpperCase();
+  }
+</script>

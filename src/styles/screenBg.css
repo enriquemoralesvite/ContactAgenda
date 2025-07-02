@@ -1,0 +1,11 @@
+.screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 96%;
+  border-radius: 25px;
+  background-color: aquamarine;
+  background-image: url(/src/assets/background.jpeg);
+  overflow: hidden;
+}
