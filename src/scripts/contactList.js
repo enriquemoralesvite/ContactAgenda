@@ -30,7 +30,8 @@ function updateContactList(filter = "") {
       div.dataset.id = contact.id;
 
       div.innerHTML = `
-      <span>${contact.name} ${contact.lastname}</span>
+      <span class="text-gray-700 text-sm">${contact.name} ${contact.lastname}</span>
+      <div><a class="cursor-pointer text-sm" href="tel:${contact.phone}" onclick="event.stopPropagation()"><img src="/src/icons/phone.svg"> </img></a></div>
     `;
 
       // Evento click a toda la card
@@ -42,9 +43,10 @@ function updateContactList(filter = "") {
     });
   const contactCountElement = document.getElementById("contactCount");
   if (contactCountElement) {
-    contactCountElement.textContent = `Total de contactos: ${filteredContacts.filter((c) => c.active).length}`;
+    contactCountElement.textContent = `Total de contactos: ${
+      filteredContacts.filter((c) => c.active).length
+    }`;
   }
-
 }
 
 // Add input event listener to search field
