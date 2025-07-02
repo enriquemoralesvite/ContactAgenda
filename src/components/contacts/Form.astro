@@ -19,12 +19,13 @@ import { Icon } from "astro-icon/components";
 
     <label
       for="contactPhoto"
-      class="bg-gray-200 rounded-full px-4 py-1 cursor-pointer mt-3"
+      class="bg-gray-200 rounded-full px-4 py-1 cursor-pointer mt-2"
     >
       Agregar foto
     </label>
 
     <input
+      hidden
       id="contactPhoto"
       name="contactPhoto"
       type="file"
@@ -51,15 +52,19 @@ import { Icon } from "astro-icon/components";
       class="w-full px-3 py-2 bg-gray-200 border border-gray-200 border-b-gray-300"
     />
 
-    <input
-      type="tel"
-      pattern="[0-9]{9}"
-      id="contactPhone"
-      name="contactPhone"
-      placeholder="Celular"
-      class="w-full px-3 py-2 bg-gray-200 border border-gray-200 border-b-gray-300"
-      required
-    />
+    <div>
+      <input
+        type="tel"
+        pattern="[0-9]{9}"
+        id="contactPhone"
+        name="contactPhone"
+        placeholder="Celular"
+        class="w-full px-3 py-2 bg-gray-200 border border-gray-200 border-b-gray-300"
+        required
+      />
+
+      <p class="text-red-500 px-4  bg-gray-200" id="error-tel"></p>
+    </div>
 
     <input
       type="email"
