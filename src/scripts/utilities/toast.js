@@ -10,9 +10,9 @@ export function showToast(message, type) {
   toast.innerText = message;
   document.getElementById("toastContainer").appendChild(toast);
 
-  setTimeout(() => toast.classList.add("show"), 100);
+  setTimeout(() => toast.classList.add("show"), 500);
   setTimeout(() => {
     toast.classList.remove("show");
-    setTimeout(() => toast.remove(), 500);
+    setTimeout(() => toast.remove(), 1000);
   }, 3000);
 }
