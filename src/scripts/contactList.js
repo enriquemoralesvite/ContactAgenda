@@ -1,6 +1,6 @@
 import { getContacts } from "./utilities/storage.js";
 
-function updateContactList() {
+function updateContactList(filter = "") {
   const list = document.getElementById("contactList");
   if (!list) return;
 
@@ -8,7 +8,20 @@ function updateContactList() {
 
   const contacts = getContacts();
 
-  contacts
+  const filteredContacts = contacts.filter(
+    (contact) =>
+      contact.name.toLowerCase().startsWith(filter.toLowerCase()) ||
+      contact.lastname.toLowerCase().startsWith(filter.toLowerCase()) ||
+      contact.phone?.startsWith(filter)
+  );
+
+  if (filteredContacts.length === 0) {
+    list.innerHTML =
+      "<p class='text-center text-gray-500 mt-4'>No se encontraron Contactos.</p>";
+    return;
+  }
+
+  filteredContacts
     .filter((contact) => contact.active)
     .forEach((contact) => {
       const div = document.createElement("div");
@@ -29,5 +42,14 @@ function updateContactList() {
     });
 }
 
-// Ejecutar al cargar
-document.addEventListener("DOMContentLoaded", updateContactList);
+// Add input event listener to search field
+document.addEventListener("DOMContentLoaded", () => {
+  updateContactList();
+
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      updateContactList(searchInput.value.trim());
+    });
+  }
+});
