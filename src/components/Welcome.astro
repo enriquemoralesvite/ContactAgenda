@@ -1,8 +1,40 @@
+---
+const apps = [
+  {
+    logo: "/src/assets/indexImages/google.png",
+    nameApp: "Google",
+    url: "https://www.google.com",
+  },
+  {
+    logo: "/src/assets/indexImages/whatsapp.png",
+    nameApp: "Whatsapp",
+    url: "https://www.whatsapp.com",
+  },
+  {
+    logo: "/src/assets/indexImages/facebook.png",
+    nameApp: "Facebook",
+    url: "https://www.facebook.com",
+  },
+  {
+    logo: "/src/assets/indexImages/contact.png",
+    nameApp: "Contactos",
+    url: "/contacts",
+  },
+];
+---
+
 <div class="h-full w-full grid grid-cols-4 grid-rows-6 gap-5">
-  <div class="flex justify-center">
-    <a class="text-white text-center" href="/contacts">
-      <img src="/src/assets/indexImages/contact.png" alt="" />
-      <span class="text-xs">Contactos</span></a
-    >
-  </div>
+  {
+    apps.map(({ url, logo, nameApp }) => (
+      <div class="flex justify-center">
+        <a
+          class="text-white text-center flex flex-col justify-between"
+          href={url}
+        >
+          <img src={logo} alt={nameApp} class="w-13 max-w-none" />
+          <span class="text-xs">{nameApp}</span>
+        </a>
+      </div>
+    ))
+  }
 </div>

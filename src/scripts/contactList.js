@@ -20,7 +20,7 @@ function updateContactList(filter = "") {
       "<p class='text-center text-gray-500 mt-4'>No se encontraron Contactos.</p>";
     return;
   }
-//Agrego Reyner
+  //Agrego Reyner
   filteredContacts
     .filter((contact) => contact.active)
     .forEach((contact) => {
@@ -35,11 +35,12 @@ function updateContactList(filter = "") {
             <img class="w-full h-full object-cover" src="${contact.photo}" alt="img-perfil" />
           `) : (`
             <div class="flex justify-center items-center font-semibold bg-gray-400 w-full h-full text-white">
-              ${contact.name.slice(0,1).toUpperCase()}
+              ${contact.name.slice(0, 1).toUpperCase()}
             </div>
           `)}
         </div>
-        <span>${contact.name} ${contact.lastname}</span>
+         <span class="text-gray-700 text-sm">${contact.name} ${contact.lastname}</span>
+      <div><a class="cursor-pointer text-sm" href="tel:${contact.phone}" onclick="event.stopPropagation()"><img src="/src/icons/phone.svg"> </img></a></div>
       `;
 
       // Evento click a toda la card
@@ -51,9 +52,9 @@ function updateContactList(filter = "") {
     });
   const contactCountElement = document.getElementById("contactCount");
   if (contactCountElement) {
-    contactCountElement.textContent = `Total de contactos: ${filteredContacts.filter((c) => c.active).length}`;
+    contactCountElement.textContent = `Total de contactos: ${filteredContacts.filter((c) => c.active).length
+      }`;
   }
-
 }
 
 // Add input event listener to search field
