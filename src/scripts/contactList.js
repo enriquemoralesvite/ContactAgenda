@@ -39,7 +39,7 @@ function updateContactList(filter = "") {
             </div>
           `)}
         </div>
-         <span class="text-gray-700 text-sm">${contact.name} ${contact.lastname}</span>
+        <span class="text-gray-700 text-sm">${contact.name} ${contact.lastname}</span>
       <div><a class="cursor-pointer text-sm" href="tel:${contact.phone}" onclick="event.stopPropagation()"><img src="/src/icons/phone.svg"> </img></a></div>
       `;
 
