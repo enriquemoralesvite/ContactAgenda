@@ -12,7 +12,7 @@ function toBase64(file) {
   });
 }
 
-  // Detectar si estamos editando o agregando
+// Detectar si estamos editando o agregando
 const params = new URLSearchParams(window.location.search);
 const contactId = params.get("id");
 
@@ -34,12 +34,12 @@ if (contactId) {
     document.getElementById("contactPhone").value = contact.phone;
     document.getElementById("contactEmail").value = contact.email;
 
-    
+
     // Mostrar imagen si existe
     if (contact.photo) {
       const previewImg = document.getElementById("photoPreview");
       const defaultIcon = document.getElementById("defaultIcon");
-    
+
       previewImg.src = contact.photo;
       previewImg.classList.remove("hidden");
       defaultIcon.style.display = "none";
@@ -155,4 +155,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+//Validacion para el campo telefono
 
+const inputPhone = document.getElementById('contactPhone')
+const inputMenssageError = document.getElementById('error-tel')
+
+inputPhone.addEventListener("change", e => {
+  const value = e.target.value
+
+  if (isNaN(Number(value))) {
+    inputMenssageError.innerText = "El numero ingresado no es valido."
+  }
+  else if (value.length != 9) {
+    inputMenssageError.innerText = "Numero debe tener 9 digitos"
+  } else {
+    inputMenssageError.innerText = '';
+  }
+})

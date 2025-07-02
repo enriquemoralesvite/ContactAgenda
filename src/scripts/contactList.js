@@ -20,19 +20,28 @@ function updateContactList(filter = "") {
       "<p class='text-center text-gray-500 mt-4'>No se encontraron Contactos.</p>";
     return;
   }
-
+  //Agrego Reyner
   filteredContacts
     .filter((contact) => contact.active)
     .forEach((contact) => {
       const div = document.createElement("div");
       div.className =
-        "p-3 border-b border-b-gray-300 flex justify-between items-center contact-item hover:bg-gray-100 cursor-pointer transition text-gray-700";
+        "p-3 border-b border-b-gray-300 flex justify-start items-center gap-2 contact-item hover:bg-gray-100 cursor-pointer transition text-gray-700";
       div.dataset.id = contact.id;
 
       div.innerHTML = `
-      <span class="text-gray-700 text-sm">${contact.name} ${contact.lastname}</span>
+        <div class="w-full min-w-[30px] max-w-[30px] h-[30px] rounded-full overflow-hidden">
+          ${contact.photo ? (`
+            <img class="w-full h-full object-cover" src="${contact.photo}" alt="img-perfil" />
+          `) : (`
+            <div class="flex justify-center items-center font-semibold bg-gray-400 w-full h-full text-white">
+              ${contact.name.slice(0, 1).toUpperCase()}
+            </div>
+          `)}
+        </div>
+        <span class="text-gray-700 text-sm">${contact.name} ${contact.lastname}</span>
       <div><a class="cursor-pointer text-sm" href="tel:${contact.phone}" onclick="event.stopPropagation()"><img src="/src/icons/phone.svg"> </img></a></div>
-    `;
+      `;
 
       // Evento click a toda la card
       div.addEventListener("click", () => {
@@ -43,9 +52,8 @@ function updateContactList(filter = "") {
     });
   const contactCountElement = document.getElementById("contactCount");
   if (contactCountElement) {
-    contactCountElement.textContent = `Total de contactos: ${
-      filteredContacts.filter((c) => c.active).length
-    }`;
+    contactCountElement.textContent = `Total de contactos: ${filteredContacts.filter((c) => c.active).length
+      }`;
   }
 }
 
