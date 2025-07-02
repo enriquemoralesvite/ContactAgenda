@@ -109,52 +109,46 @@ function editContact(e) {
   }
 }
 
-function deleteContact() {
+export function deleteContact(id) {
   const contacts = getContacts();
 
-  if (editIndex >= 0) {
-    contacts.splice(editIndex, 1);
-    saveContacts(contacts);
-    editIndex = -1;
-    document.getElementById("contactName").value = "";
-    document.getElementById("contactLastName").value = "";
-    document.getElementById("contactPhone").value = "";
-    updateContactList();
-    showToast("Contacto eliminado exitosamente", "error");
-  } else {
-    showToast("Selecciona un contacto para eliminar", "error");
-  }
+  const contact = contacts.find((contact) => contact.id == id);
+  contact.active = false;
+  saveContacts(contacts);
+
+  showToast("Contacto eliminado exitosamente", "error");
+  window.location.href = "/contacts";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const style = document.createElement("style");
-  style.textContent = `
-    .toast {
-      transition: all 0.5s ease-in-out;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  `;
-  document.head.appendChild(style);
+// document.addEventListener("DOMContentLoaded", () => {
+//   const style = document.createElement("style");
+//   style.textContent = `
+//     .toast {
+//       transition: all 0.5s ease-in-out;
+//       opacity: 0;
+//       transform: translateY(20px);
+//     }
+//     .toast.show {
+//       opacity: 1;
+//       transform: translateY(0);
+//     }
+//   `;
+//   document.head.appendChild(style);
 
-  document.getElementById("contactList").addEventListener("click", (e) => {
-    const selectBtn = e.target.closest(".select-btn");
-    if (selectBtn) {
-      e.preventDefault();
-      const index = parseInt(selectBtn.dataset.index);
-      selectContact(index);
-    }
-  });
+//   document.getElementById("contactList").addEventListener("click", (e) => {
+//     const selectBtn = e.target.closest(".select-btn");
+//     if (selectBtn) {
+//       e.preventDefault();
+//       const index = parseInt(selectBtn.dataset.index);
+//       selectContact(index);
+//     }
+//   });
 
-  document.getElementById("btnAdd")?.addEventListener("click", addContact);
-  document.getElementById("btnEdit")?.addEventListener("click", editContact);
-  document
-    .getElementById("btnDelete")
-    ?.addEventListener("click", deleteContact);
+//   document.getElementById("btnAdd")?.addEventListener("click", addContact);
+//   document.getElementById("btnEdit")?.addEventListener("click", editContact);
+//   document
+//     .getElementById("btnDelete")
+//     ?.addEventListener("click", deleteContact);
 
-  updateContactList();
-});
+//   updateContactList();
+// });
