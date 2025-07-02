@@ -4,7 +4,33 @@ import { Icon } from "astro-icon/components";
 
 <form id="formContact" class="mx-auto bg-white rounded-lg">
   <div class="h-50 flex flex-col justify-center items-center mb-3">
-    <Icon name="user" width="150" height="150" class="text-gray-300" />
+    <Icon
+      id="defaultIcon"
+      name="user"
+      width="150"
+      height="150"
+      class="text-gray-300"
+    />
+    <img
+      id="photoPreview"
+      class="mt-2 w-36 h-36 rounded-full object-cover hidden"
+      alt="Vista previa"
+    />
+
+    <label
+      for="contactPhoto"
+      class="bg-gray-200 rounded-full px-4 py-1 cursor-pointer mt-3"
+    >
+      Agregar foto
+    </label>
+
+    <input
+      id="contactPhoto"
+      name="contactPhoto"
+      type="file"
+      accept="image/*"
+      class="mt-2 text-sm text-gray-600"
+    />
   </div>
 
   <div class="mb-3">
@@ -47,3 +73,12 @@ import { Icon } from "astro-icon/components";
 <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2"></div>
 
 <script src="../../scripts/form.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const contactId = params.get("id");
+
+  if (contactId) {
+    const title = document.getElementById("formTitle");
+    if (title) title.textContent = "Editar Contacto";
+  }
+</script>

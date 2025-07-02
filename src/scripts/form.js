@@ -1,7 +1,18 @@
 import { showToast } from "./utilities/toast.js";
 import { getContacts, saveContacts } from "./utilities/storage.js";
 
-// Detectar si estamos editando o agregando
+
+// Convertir imagen a base64
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject("Error al leer la imagen");
+    reader.readAsDataURL(file);
+  });
+}
+
+  // Detectar si estamos editando o agregando
 const params = new URLSearchParams(window.location.search);
 const contactId = params.get("id");
 
@@ -23,8 +34,20 @@ if (contactId) {
     document.getElementById("contactPhone").value = contact.phone;
     document.getElementById("contactEmail").value = contact.email;
 
+    
+    // Mostrar imagen si existe
+    if (contact.photo) {
+      const previewImg = document.getElementById("photoPreview");
+      const defaultIcon = document.getElementById("defaultIcon");
+    
+      previewImg.src = contact.photo;
+      previewImg.classList.remove("hidden");
+      defaultIcon.style.display = "none";
+    }
+
+
     // Cambiar título si quieres
-    const title = document.querySelector(".font-semibold");
+    const title = document.getElementById("formTitle");
     if (title) title.textContent = "Editar Contacto";
 
     // Cambiar texto de botón si quieres
@@ -32,15 +55,21 @@ if (contactId) {
 
     // Activar botón porque ya hay datos cargados
     btnSave.disabled = false;
-
+    form.dispatchEvent(new Event("input"));
     // Evento guardar para actualizar
-    btnSave.addEventListener("click", (e) => {
+    btnSave.addEventListener("click", async (e) => {
       e.preventDefault();
 
       contact.name = document.getElementById("contactName").value;
       contact.lastname = document.getElementById("contactLastName").value;
       contact.phone = document.getElementById("contactPhone").value;
       contact.email = document.getElementById("contactEmail").value;
+
+      const photoInput = document.getElementById("contactPhoto");
+      if (photoInput?.files[0]) {
+        const newPhoto = await toBase64(photoInput.files[0]);
+        contact.photo = newPhoto;
+      }
 
       saveContacts(contacts);
       showToast("Contacto actualizado correctamente", "success");
@@ -52,7 +81,12 @@ if (contactId) {
     window.location.href = "/contacts";
   }
 } else {
-  document.getElementById("btnSave").addEventListener("click", addContact);
+  document.getElementById("btnSave").addEventListener("click", (e) => {
+    addContact(e).catch((error) => {
+      console.error("Error al agregar contacto:", error);
+      showToast("Ocurrió un error al guardar el contacto", "error");
+    });
+  });
 }
 
 // Event listener para activar BTN GUARDAR
@@ -68,14 +102,14 @@ document.getElementById("formContact").addEventListener("input", (e) => {
 });
 
 //Funcion agregar contacto
-function addContact(e) {
+async function addContact(e) {
   e.preventDefault();
   const name = document.getElementById("contactName");
   const lastname = document.getElementById("contactLastName");
   const phone = document.getElementById("contactPhone");
   const email = document.getElementById("contactEmail");
+  const photoInput = document.getElementById("contactPhoto");
 
-  //Si los campos requeridos estan completos, se guarda en NewContact
   if (name.value && phone.value) {
     const contacts = getContacts();
     const newContact = {
@@ -85,18 +119,40 @@ function addContact(e) {
       phone: phone.value,
       email: email.value,
       active: true,
+      photo: photoInput?.files[0]
+        ? await toBase64(photoInput.files[0])
+        : "",
     };
 
     contacts.push(newContact);
     saveContacts(contacts);
-
-    //Limpiar formulario
     document.getElementById("formContact").reset();
-    //Mostrar Toast
     showToast("Contacto agregado exitosamente", "success");
-    //Redirigir al inicio
     window.location.href = "/contacts";
   } else {
     showToast("Por favor, completa todos los campos", "error");
   }
 }
+
+
+// Mostrar imagen
+
+document.addEventListener("DOMContentLoaded", () => {
+  const photoInput = document.getElementById("contactPhoto");
+  const previewImg = document.getElementById("photoPreview");
+  const defaultIcon = document.getElementById("defaultIcon");
+
+  if (photoInput && previewImg && defaultIcon) {
+    photoInput.addEventListener("change", () => {
+      const file = photoInput.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        previewImg.src = url;
+        previewImg.classList.remove("hidden");
+        defaultIcon.style.display = "none";
+      }
+    });
+  }
+});
+
+
